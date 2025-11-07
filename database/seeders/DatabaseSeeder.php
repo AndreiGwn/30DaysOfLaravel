@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Job;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -24,7 +25,7 @@ class DatabaseSeeder extends Seeder
         // Create 20 blog posts
         Post::factory(20)->create();
 
-        // Seed job listings
-        $this->call(JobSeeder::class);
+        // Create 50 job listings using factory
+        Job::factory(50)->create();
     }
 }
