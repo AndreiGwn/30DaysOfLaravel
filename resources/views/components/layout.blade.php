@@ -23,6 +23,9 @@
                         <a href="/" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->is('/') ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' }}">
                             Home
                         </a>
+                        <a href="/jobs" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->is('jobs*') ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' }}">
+                            Jobs
+                        </a>
                         <a href="/blog" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->is('blog*') ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' }}">
                             Blog
                         </a>
