@@ -9,3 +9,7 @@ Route::get('/', function () {
 Route::get('/contact', function () {
     return "Welcome to the contact page!";
 });
+
+Route::get('/blog', function () {
+    return view('blog.index');
+});
