@@ -23,5 +23,8 @@ class DatabaseSeeder extends Seeder
 
         // Create 20 blog posts
         Post::factory(20)->create();
+
+        // Seed job listings
+        $this->call(JobSeeder::class);
     }
 }
