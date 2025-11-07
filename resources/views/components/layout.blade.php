@@ -35,6 +35,32 @@
                     </div>
                 </div>
                 
+                <!-- Authentication Links -->
+                <div class="hidden md:flex items-center space-x-4">
+                    @auth
+                        <div class="flex items-center space-x-4">
+                            <a href="{{ route('dashboard') }}" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
+                                Dashboard
+                            </a>
+                            <form method="POST" action="{{ route('logout') }}" class="inline">
+                                @csrf
+                                <button type="submit" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 transition-all duration-200">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <div class="flex items-center space-x-4">
+                            <a href="{{ route('login') }}" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
+                                Login
+                            </a>
+                            <a href="{{ route('register') }}" class="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-all duration-200">
+                                Register
+                            </a>
+                        </div>
+                    @endauth
+                </div>
+                
                 <!-- Mobile menu button -->
                 <div class="md:hidden">
                     <button type="button" class="p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">
