@@ -44,4 +44,30 @@ class JobController extends Controller
             'searchTerm' => $term
         ]);
     }
+
+    /**
+     * Show the form for creating a new job
+     */
+    public function create()
+    {
+        return view('jobs.create');
+    }
+
+    /**
+     * Store a newly created job in storage
+     */
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'salary' => ['required', 'string', 'max:100'],
+            'location' => ['required', 'string', 'max:255'],
+            'company' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'min:10']
+        ]);
+
+        Job::create($validatedData);
+
+        return redirect('/jobs')->with('success', 'Job listing created successfully!');
+    }
 }

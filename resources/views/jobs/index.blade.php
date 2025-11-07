@@ -8,9 +8,23 @@
                 Job Listings
             </span>
         </h1>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
             Find your next opportunity! Browse through our curated job listings and take the next step in your career.
         </p>
+        
+        @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6 max-w-lg mx-auto">
+                {{ session('success') }}
+            </div>
+        @endif
+        
+        <a href="/jobs/create" 
+           class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Post a Job
+        </a>
     </div>
     
     <!-- Job Listings -->
