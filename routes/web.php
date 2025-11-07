@@ -7,7 +7,7 @@ Route::get('/', function () {
 });
 
 Route::get('/contact', function () {
-    return "Welcome to the contact page!";
+    return view('contact');
 });
 
 Route::get('/blog', function () {
