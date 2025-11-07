@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class JobController extends Controller
 {
@@ -12,7 +14,11 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::getAllJobs();
+        $cacheKey = 'jobs.page.' . request('page', 1);
+        
+        $jobs = Cache::remember($cacheKey, now()->addMinutes(5), function () {
+            return Job::with('user')->latest()->paginate(10);
+        });
         
         return view('jobs.index', ['jobs' => $jobs]);
     }
@@ -37,7 +43,18 @@ class JobController extends Controller
     public function search(Request $request)
     {
         $term = $request->query('q');
-        $jobs = $term ? Job::search($term) : Job::getAllJobs();
+        
+        if ($term) {
+            $jobs = Job::with('user')
+                ->where('title', 'like', "%{$term}%")
+                ->orWhere('company', 'like', "%{$term}%")
+                ->orWhere('location', 'like', "%{$term}%")
+                ->latest()
+                ->paginate(10)
+                ->appends(request()->query());
+        } else {
+            $jobs = Job::with('user')->latest()->paginate(10);
+        }
         
         return view('jobs.index', [
             'jobs' => $jobs,
@@ -66,8 +83,45 @@ class JobController extends Controller
             'description' => ['required', 'string', 'min:10']
         ]);
 
+        $validatedData['user_id'] = Auth::id();
+
         Job::create($validatedData);
 
         return redirect('/jobs')->with('success', 'Job listing created successfully!');
+    }
+
+    /**
+     * API: Get all jobs as JSON
+     */
+    public function apiIndex()
+    {
+        $jobs = Job::with('user')->latest()->paginate(10);
+        
+        return response()->json([
+            'success' => true,
+            'data' => $jobs,
+            'message' => 'Jobs retrieved successfully'
+        ]);
+    }
+
+    /**
+     * API: Get single job as JSON
+     */
+    public function apiShow($id)
+    {
+        $job = Job::with('user')->find($id);
+        
+        if (!$job) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Job not found'
+            ], 404);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'data' => $job,
+            'message' => 'Job retrieved successfully'
+        ]);
     }
 }

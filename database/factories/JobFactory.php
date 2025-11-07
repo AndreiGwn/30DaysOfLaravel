@@ -69,7 +69,8 @@ class JobFactory extends Factory
             'salary' => '$' . $this->faker->numberBetween(35, 120) . ',000',
             'location' => $this->faker->randomElement($locations),
             'company' => $this->faker->randomElement($companies),
-            'description' => $this->faker->paragraphs(3, true)
+            'description' => $this->faker->paragraphs(3, true),
+            'user_id' => \App\Models\User::factory()
         ];
     }
 }

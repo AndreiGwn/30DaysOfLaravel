@@ -22,8 +22,17 @@ class Job extends Model
         'salary',
         'location',
         'company',
-        'description'
+        'description',
+        'user_id'
     ];
+
+    /**
+     * Get the user that owns the job.
+     */
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 
     /**
      * Get all jobs (for backwards compatibility)
